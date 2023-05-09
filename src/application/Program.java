@@ -9,22 +9,17 @@ public class Program {
 
         Connection conn = null;
         PreparedStatement st = null;
-        ResultSet rt = null;
+        Statement stw = null;
+        ResultSet rs = null;
 
         try {
             conn = DB.getConnection();
-            st = conn.prepareStatement(
-                    "INSERT INTO candidatos "
-                    + "(Numero, Nome, Votos, Partido_Id)"
-                    + "VALUES "
-                    + "(?, ?, ?, ?)"
-            );
-            st.setInt(1, 13);
-            st.setString(2, "Killua");
-            st.setInt(3, 0);
-            st.setInt(4, 1);
+            stw = conn.createStatement();
+            stw.executeQuery("SELECT * FROM candidatos");
+            rs = stw.getResultSet();
 
-            st.executeUpdate();
+            System.out.println(rs.toString());
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
