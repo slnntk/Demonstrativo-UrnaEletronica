@@ -8,6 +8,10 @@ abstract class processoEleitoral {
     public processoEleitoral() {
     }
 
+    public processoEleitoral(String nome) {
+        this.nome = nome;
+    }
+
     public processoEleitoral(Integer id, String nome) {
         this.id = id;
         this.nome = nome;

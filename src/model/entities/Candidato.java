@@ -17,6 +17,11 @@ public class Candidato extends processoEleitoral{
         this.partido = partido;
     }
 
+    public Candidato(String nome, Integer numero) {
+        super(nome);
+        this.numero = numero;
+    }
+
     public Integer getNumero() {
         return numero;
     }

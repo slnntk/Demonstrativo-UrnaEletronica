@@ -9,7 +9,7 @@ public interface CandidatoDAO{
     void insert(Candidato obj);
     void update(Candidato obj);
     void deleteById(Integer id);
-    Candidato findById(Integer id);
+    Candidato findByNumber(Integer numero);
     Set<Candidato> findAll();
 
 }

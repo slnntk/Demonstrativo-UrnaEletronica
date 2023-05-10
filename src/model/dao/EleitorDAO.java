@@ -5,7 +5,8 @@ import model.entities.Eleitor;
 public interface EleitorDAO {
 
     void insert(Eleitor obj);
-    void hasVoted(Eleitor obj);
-    void isValido();
+    boolean hasVoted(Eleitor obj);
+    void updateVote(Eleitor obj);
+    Eleitor findByTitulo(Integer titulo);
 
 }

@@ -1,10 +1,8 @@
 package application;
 
 import db.DB;
-import model.dao.CandidatoDAO;
-import model.dao.impl.CandidatoDAOJDBC;
 import model.dao.impl.EleitorDAOJDBC;
-import model.entities.Candidato;
+import model.dao.impl.UrnaDAOJDBC;
 
 import java.sql.*;
 
@@ -17,8 +15,9 @@ public class Program {
 
 
         conn = DB.getConnection();
-        EleitorDAOJDBC eleitorDAOJDBC = new EleitorDAOJDBC(conn);
-
+        EleitorDAOJDBC e = new EleitorDAOJDBC(conn);
+        UrnaDAOJDBC u = new UrnaDAOJDBC(conn);
+        u.votar(e.findByTitulo(2316230), 10);
 
     }
 }
