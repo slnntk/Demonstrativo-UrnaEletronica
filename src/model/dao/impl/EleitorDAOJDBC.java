@@ -2,11 +2,9 @@ package model.dao.impl;
 
 import model.dao.EleitorDAO;
 import model.entities.Eleitor;
+import model.entities.Partido;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class EleitorDAOJDBC implements EleitorDAO {
 
@@ -26,19 +24,39 @@ public class EleitorDAOJDBC implements EleitorDAO {
                     +"(?)",
                     Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, obj.getTitulo().intValue());
+            st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void hasVoted(Eleitor obj) {
+    public boolean hasVoted(Eleitor obj) {
         try {
+            ResultSet rs = null;
             PreparedStatement st = conn.prepareStatement(
                      "SELECT hasVoted FROM eleitores "
                     +"WHERE Titulo = ? "
             );
             st.setInt(1, obj.getTitulo().intValue());
+            st.executeQuery();
+            rs = st.getResultSet();
+            while (rs.next()){
+                if (rs.getInt("hasVoted") == 1){
+                    return true;
+                }
+            }
+        return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Eleitor instantiateEleitor(ResultSet rs){
+        Eleitor eleitor = new Eleitor();
+        try {
+            eleitor.setTitulo(rs.getInt("Titulo"));
+            return eleitor;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
