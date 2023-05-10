@@ -43,11 +43,8 @@ public class Candidato extends processoEleitoral{
 
     @Override
     public String toString() {
-        return "Candidato{" +
-                "numero=" + numero +
-                ", votos=" + votos +
-                ", partido=" + partido +
-                "} " + super.toString();
+        return super.toString() +
+                numero + "," + votos + "," + partido;
     }
 
     @Override

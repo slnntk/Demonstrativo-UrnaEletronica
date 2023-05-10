@@ -15,10 +15,7 @@ abstract class processoEleitoral {
 
     @Override
     public String toString() {
-        return "processoEleitoral{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
+        return id + "," + nome + ",";
     }
 
     public Integer getId() {

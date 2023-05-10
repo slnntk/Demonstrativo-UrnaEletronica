@@ -1,20 +1,20 @@
 package model.entities;
 
-abstract class Eleitor {
+public abstract class Eleitor {
 
-    private String titulo;
+    private Integer titulo;
     private boolean hasVoted;
 
-    public Eleitor(String titulo, boolean hasVoted) {
+    public Eleitor(Integer titulo, boolean hasVoted) {
         this.titulo = titulo;
         this.hasVoted = hasVoted;
     }
 
-    public String getTitulo() {
+    public Integer getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
+    public void setTitulo(Integer titulo) {
         this.titulo = titulo;
     }
 
