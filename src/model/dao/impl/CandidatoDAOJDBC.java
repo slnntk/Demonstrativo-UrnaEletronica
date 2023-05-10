@@ -7,11 +7,17 @@ import model.entities.Partido;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashSet;
 import java.util.Set;
 
 public class CandidatoDAOJDBC implements CandidatoDAO {
 
     private Connection conn;
+
+    public CandidatoDAOJDBC(Connection conn) {
+        this.conn = conn;
+    }
 
     @Override
     public void insert(Candidato obj) {
@@ -35,6 +41,26 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
 
     @Override
     public Set<Candidato> findAll() {
+
+        Statement st = null;
+        ResultSet rs = null;
+        Set<Candidato> candidatoSet = new HashSet<>();
+
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery("SELECT * FROM candidatos");
+
+            while (rs.next()){
+                candidatoSet.add(instantiateCandidato(rs, null));
+            }
+
+            candidatoSet.forEach(System.out::println);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
         return null;
     }
 
