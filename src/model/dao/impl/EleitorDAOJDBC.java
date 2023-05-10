@@ -1,6 +1,8 @@
 package model.dao.impl;
 
+import db.DB;
 import model.dao.EleitorDAO;
+import model.entities.Candidato;
 import model.entities.Eleitor;
 import model.entities.Partido;
 
@@ -12,6 +14,31 @@ public class EleitorDAOJDBC implements EleitorDAO {
 
     public EleitorDAOJDBC(Connection conn) {
         this.conn = conn;
+    }
+    @Override
+    public Eleitor findByTitulo(Integer titulo) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Candidato candidato = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM eleitores "
+                            +"WHERE eleitores.Titulo = ?"
+            );
+            st.setInt(1, titulo);
+            rs = st.executeQuery();
+            while (rs.next()){
+                return instantiateEleitor(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+            DB.getConnection();
+        }
+        return null;
     }
 
     @Override
@@ -52,6 +79,31 @@ public class EleitorDAOJDBC implements EleitorDAO {
         }
     }
 
+    @Override
+    public void updateVote(Eleitor obj) {
+
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement(
+                     "UPDATE eleitores "
+                    +"SET hasVoted = hasVoted + 1 "
+                    +"WHERE "
+                    +"(Titulo = ?)"
+            );
+            if (!hasVoted(obj)){
+                st.setInt(1, obj.getTitulo());
+                st.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DB.closeStatement(st);
+            DB.closeConnection();
+        }
+
+    }
+
     private Eleitor instantiateEleitor(ResultSet rs){
         Eleitor eleitor = new Eleitor();
         try {
@@ -60,10 +112,5 @@ public class EleitorDAOJDBC implements EleitorDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void isValido() {
-
     }
 }
