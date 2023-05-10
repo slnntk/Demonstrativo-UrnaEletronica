@@ -1,5 +1,6 @@
 package model.dao.impl;
 
+import db.DB;
 import model.dao.CandidatoDAO;
 import model.entities.Candidato;
 import model.entities.Partido;
@@ -18,7 +19,20 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
 
     @Override
     public void insert(Candidato obj) {
-
+        try {
+            PreparedStatement st = conn.prepareStatement(
+                     "INSERT INTO candidatos "
+                    +"(Numero, Nome, Partido_Id) "
+                    +"VALUES "
+                    +"(?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1, obj.getNumero());
+            st.setString(2, obj.getNome());
+            st.setInt(3, 1);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -28,7 +42,23 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement st = null;
+        Candidato candidato = null;
 
+        try {
+            st = conn.prepareStatement(
+                     "DELETE FROM candidatos "
+                    +"WHERE "
+                    +"Id = ?"
+            );
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DB.closeStatement(st);
+            DB.getConnection();
+        }
     }
 
     @Override
@@ -49,6 +79,10 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+            DB.getConnection();
         }
         return null;
     }
@@ -70,6 +104,10 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
         return candidatoSet;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+            DB.getConnection();
         }
     }
 
