@@ -1,27 +1,20 @@
 package model.entities;
 
-public abstract class Candidato {
+public class Candidato extends processoEleitoral{
 
-    private Integer id;
     private Integer numero;
-    private String nome;
     private Integer votos;
     private Partido partido;
 
-    public Candidato(Integer id, Integer numero, String nome, Integer votos, Partido partido) {
-        this.id = id;
+    public Candidato() {
+
+    }
+
+    public Candidato(Integer id, String nome, Integer numero, Integer votos, Partido partido) {
+        super(id, nome);
         this.numero = numero;
-        this.nome = nome;
         this.votos = votos;
         this.partido = partido;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getNumero() {
@@ -30,14 +23,6 @@ public abstract class Candidato {
 
     public void setNumero(Integer numero) {
         this.numero = numero;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public Integer getVotos() {
@@ -59,12 +44,10 @@ public abstract class Candidato {
     @Override
     public String toString() {
         return "Candidato{" +
-                "id=" + id +
-                ", numero=" + numero +
-                ", nome='" + nome + '\'' +
+                "numero=" + numero +
                 ", votos=" + votos +
                 ", partido=" + partido +
-                '}';
+                "} " + super.toString();
     }
 
     @Override

@@ -2,34 +2,18 @@ package model.entities;
 
 import java.util.Set;
 
-abstract class Partido {
-
-    private Integer id;
-    private String nome;
+public class Partido extends processoEleitoral{
+    ;
     private String sigla;
 
     private Set<Candidato> candidatos;
 
+    public Partido() {
+    }
+
     public Partido(Integer id, String nome, String sigla) {
-        this.id = id;
-        this.nome = nome;
+        super(id, nome);
         this.sigla = sigla;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getSigla() {
@@ -47,11 +31,9 @@ abstract class Partido {
     @Override
     public String toString() {
         return "Partido{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", sigla='" + sigla + '\'' +
+                "sigla='" + sigla + '\'' +
                 ", candidatos=" + candidatos +
-                '}';
+                "} " + super.toString();
     }
 
     @Override
