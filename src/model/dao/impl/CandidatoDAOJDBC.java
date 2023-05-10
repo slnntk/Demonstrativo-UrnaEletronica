@@ -4,10 +4,7 @@ import model.dao.CandidatoDAO;
 import model.entities.Candidato;
 import model.entities.Partido;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +32,24 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
     }
 
     @Override
-    public Candidato findById(Integer id) {
+    public Candidato findByNumber(Integer numero) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Candidato candidato = null;
+
+        try {
+            st = conn.prepareStatement(
+                     "SELECT * FROM candidatos "
+                    +"WHERE candidatos.Numero = ?"
+            );
+            st.setInt(1, numero);
+            rs = st.executeQuery();
+            while (rs.next()){
+                return instantiateCandidato(rs, null);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -53,15 +67,10 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
             while (rs.next()){
                 candidatoSet.add(instantiateCandidato(rs, null));
             }
-
-            candidatoSet.forEach(System.out::println);
-
+        return candidatoSet;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-        return null;
     }
 
     private Candidato instantiateCandidato(ResultSet rs, Partido partido){

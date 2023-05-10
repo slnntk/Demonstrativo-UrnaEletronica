@@ -1,11 +1,14 @@
 package model.entities;
 
-public abstract class Eleitor {
+public class Eleitor {
 
     private Integer titulo;
-    private boolean hasVoted;
+    private Integer hasVoted;
 
-    public Eleitor(Integer titulo, boolean hasVoted) {
+    public Eleitor() {
+    }
+
+    public Eleitor(Integer titulo, Integer hasVoted) {
         this.titulo = titulo;
         this.hasVoted = hasVoted;
     }
@@ -18,11 +21,11 @@ public abstract class Eleitor {
         this.titulo = titulo;
     }
 
-    public boolean isHasVoted() {
+    public Integer isHasVoted() {
         return hasVoted;
     }
 
-    public void setHasVoted(boolean hasVoted) {
+    public void setHasVoted(Integer hasVoted) {
         this.hasVoted = hasVoted;
     }
 
