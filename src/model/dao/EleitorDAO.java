@@ -6,7 +6,6 @@ public interface EleitorDAO {
 
     void insert(Eleitor obj);
     boolean hasVoted(Eleitor obj);
-    void updateVote(Eleitor obj);
     Eleitor findByTitulo(Integer titulo);
 
 }

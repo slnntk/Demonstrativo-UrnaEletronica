@@ -79,31 +79,6 @@ public class EleitorDAOJDBC implements EleitorDAO {
         }
     }
 
-    @Override
-    public void updateVote(Eleitor obj) {
-
-        PreparedStatement st = null;
-
-        try {
-            st = conn.prepareStatement(
-                     "UPDATE eleitores "
-                    +"SET hasVoted = hasVoted + 1 "
-                    +"WHERE "
-                    +"(Titulo = ?)"
-            );
-            if (!hasVoted(obj)){
-                st.setInt(1, obj.getTitulo());
-                st.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DB.closeStatement(st);
-            DB.closeConnection();
-        }
-
-    }
-
     private Eleitor instantiateEleitor(ResultSet rs){
         Eleitor eleitor = new Eleitor();
         try {
