@@ -6,5 +6,4 @@ public interface UrnaDAO {
 
     void votar(Eleitor eleitor, Integer numeroDoCandidato);
 
-
 }
