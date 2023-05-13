@@ -4,10 +4,9 @@ import db.DB;
 import model.dao.UrnaDAO;
 import model.entities.Eleitor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UrnaDAOJDBC implements UrnaDAO {
 
@@ -58,6 +57,24 @@ public class UrnaDAOJDBC implements UrnaDAO {
             DB.closeConnection();
         }
 
+    }
+
+    @Override
+    public void boletimDeUrna() {
+
+        Statement st = null;
+        ResultSet set = null;
+
+        try{
+            st = conn.createStatement();
+            st.executeQuery("SELECT * FROM candidatos");
+            set = st.getResultSet();
+            while (set.next()){
+                System.out.println(set.getInt("Numero") + "," + set.getInt("Votos"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
