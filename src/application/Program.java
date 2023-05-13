@@ -3,6 +3,7 @@ package application;
 import db.DB;
 import model.dao.impl.EleitorDAOJDBC;
 import model.dao.impl.UrnaDAOJDBC;
+import model.entities.Eleitor;
 
 import java.sql.*;
 
@@ -15,9 +16,10 @@ public class Program {
 
 
         conn = DB.getConnection();
-        EleitorDAOJDBC e = new EleitorDAOJDBC(conn);
-        UrnaDAOJDBC u = new UrnaDAOJDBC(conn);
-        u.votar(e.findByTitulo(2316230), 10);
+        UrnaDAOJDBC urna = new UrnaDAOJDBC(conn);
+        EleitorDAOJDBC eleitor = new EleitorDAOJDBC(conn);
+        urna.votar(eleitor.findByTitulo(384845), 13);
+
 
     }
 }
