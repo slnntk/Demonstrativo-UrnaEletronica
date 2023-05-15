@@ -4,7 +4,6 @@ import db.DB;
 import model.dao.EleitorDAO;
 import model.entities.Candidato;
 import model.entities.Eleitor;
-import model.entities.Partido;
 
 import java.sql.*;
 
