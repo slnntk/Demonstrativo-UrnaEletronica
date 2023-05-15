@@ -18,7 +18,8 @@ public class Program {
         conn = DB.getConnection();
         UrnaDAOJDBC urna = new UrnaDAOJDBC(conn);
         EleitorDAOJDBC eleitor = new EleitorDAOJDBC(conn);
-        urna.boletimDeUrna();
+        urna.votar(eleitor.findByTitulo(666777), 13);
+
 
 
     }
