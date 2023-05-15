@@ -2,7 +2,6 @@ package model.dao.impl;
 
 import db.DB;
 import model.dao.PartidoDAO;
-import model.entities.Candidato;
 import model.entities.Partido;
 
 import java.sql.*;
@@ -11,7 +10,7 @@ import java.util.Set;
 
 public class PartidoDAOJDBC implements PartidoDAO {
 
-    private Connection conn;
+    private final Connection conn;
 
     public PartidoDAOJDBC(Connection conn) {
         this.conn = conn;
@@ -41,7 +40,6 @@ public class PartidoDAOJDBC implements PartidoDAO {
     @Override
     public void deleteById(Integer id) {
         PreparedStatement st = null;
-        Candidato candidato = null;
 
         try {
             st = conn.prepareStatement(

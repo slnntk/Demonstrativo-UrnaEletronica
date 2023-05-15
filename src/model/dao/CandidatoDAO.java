@@ -2,6 +2,7 @@ package model.dao;
 
 import model.entities.Candidato;
 
+import java.sql.ResultSet;
 import java.util.Set;
 
 public interface CandidatoDAO{
@@ -11,5 +12,4 @@ public interface CandidatoDAO{
     void deleteById(Integer id);
     Candidato findByNumber(Integer numero);
     Set<Candidato> findAll();
-
 }

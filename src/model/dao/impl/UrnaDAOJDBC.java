@@ -5,12 +5,10 @@ import model.dao.UrnaDAO;
 import model.entities.Eleitor;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UrnaDAOJDBC implements UrnaDAO {
 
-    Connection conn = null;
+    private final Connection conn;
 
     public UrnaDAOJDBC(Connection conn) {
         this.conn = conn;
@@ -62,8 +60,8 @@ public class UrnaDAOJDBC implements UrnaDAO {
     @Override
     public void boletimDeUrna() {
 
-        Statement st = null;
-        ResultSet set = null;
+        Statement st;
+        ResultSet set;
 
         try{
             st = conn.createStatement();
