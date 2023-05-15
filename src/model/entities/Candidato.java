@@ -10,10 +10,16 @@ public class Candidato extends processoEleitoral{
 
     }
 
-    public Candidato(Integer id, String nome, Integer numero, Integer votos, Partido partido) {
+    public Candidato(Integer id, String nome, Integer numero, Partido partido, Integer votos) {
         super(id, nome);
         this.numero = numero;
         this.votos = votos;
+        this.partido = partido;
+    }
+
+    public Candidato(String nome, Integer numero, Partido partido) {
+        super(nome);
+        this.numero = numero;
         this.partido = partido;
     }
 
@@ -21,6 +27,8 @@ public class Candidato extends processoEleitoral{
         super(nome);
         this.numero = numero;
     }
+
+
 
     public Integer getNumero() {
         return numero;

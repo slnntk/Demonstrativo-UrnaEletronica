@@ -9,11 +9,13 @@ public class Partido extends processoEleitoral{
     public Partido() {
     }
 
-    public Partido(Integer id, String nome, String sigla) {
+    public Partido(Integer id, String nome) {
         super(id, nome);
     }
 
-
+    public Partido(String nome) {
+        super(nome);
+    }
 
     public Set<Candidato> getCandidatos() {
         return candidatos;

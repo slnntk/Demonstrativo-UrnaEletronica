@@ -3,12 +3,12 @@ package model.entities;
 public class Eleitor {
 
     private Integer titulo;
-    private Integer hasVoted;
+    private boolean hasVoted;
 
     public Eleitor() {
     }
 
-    public Eleitor(Integer titulo, Integer hasVoted) {
+    public Eleitor(Integer titulo, boolean hasVoted) {
         this.titulo = titulo;
         this.hasVoted = hasVoted;
     }
@@ -21,11 +21,11 @@ public class Eleitor {
         this.titulo = titulo;
     }
 
-    public Integer isHasVoted() {
+    public boolean isHasVoted() {
         return hasVoted;
     }
 
-    public void setHasVoted(Integer hasVoted) {
+    public void setHasVoted(boolean hasVoted) {
         this.hasVoted = hasVoted;
     }
 

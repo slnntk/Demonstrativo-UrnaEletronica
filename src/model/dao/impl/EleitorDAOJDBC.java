@@ -45,11 +45,12 @@ public class EleitorDAOJDBC implements EleitorDAO {
         try {
             PreparedStatement st = conn.prepareStatement(
                     "INSERT INTO eleitores "
-                    +"(Titulo) "
+                    +"(Titulo, hasVoted) "
                     +"VALUES "
-                    +"(?)",
+                    +"(?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, obj.getTitulo().intValue());
+            st.setBoolean(2, false);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,7 +69,7 @@ public class EleitorDAOJDBC implements EleitorDAO {
             st.executeQuery();
             rs = st.getResultSet();
             while (rs.next()){
-                if (rs.getInt("hasVoted") == 1){
+                if (rs.getBoolean("hasVoted")){
                     return true;
                 }
             }

@@ -9,7 +9,7 @@ public interface PartidoDAO {
     void insert(Partido obj);
     void update(Partido obj);
     void deleteById(Integer id);
-    Partido findByName(String name);
+    Partido findById(Integer id);
 
     Set<Partido> findAll();
 

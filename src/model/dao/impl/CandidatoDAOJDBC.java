@@ -22,13 +22,13 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
         try {
             PreparedStatement st = conn.prepareStatement(
                      "INSERT INTO candidatos "
-                    +"(Numero, Nome, Partido_Id) "
+                    +"(Name, Numero, partidosId) "
                     +"VALUES "
                     +"(?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1, obj.getNumero());
-            st.setString(2, obj.getNome());
-            st.setInt(3, 1);
+            st.setString(1, obj.getNome());
+            st.setInt(2, obj.getNumero());
+            st.setInt(3, obj.getPartido().getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -113,7 +113,7 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
 
     private Candidato instantiateCandidato(ResultSet rs, Integer partidoId){
         Candidato candidato = new Candidato();
-        PartidoDAOJDBC jd = new PartidoDAOJDBC();
+        PartidoDAOJDBC jd = new PartidoDAOJDBC(conn);
         Partido partido = jd.findById(partidoId);
         try {
             candidato.setId(rs.getInt("Id"));
@@ -122,18 +122,6 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
             candidato.setVotos(rs.getInt("Votos"));
             candidato.setPartido(partido);
             return candidato;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Partido instantiatePartido(ResultSet rs){
-        Partido partido = new Partido();
-        try {
-            partido.setId(rs.getInt("Id"));
-            partido.setNome(rs.getString("Nome"));
-            partido.setSigla(rs.getString("Sigla"));
-            return partido;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

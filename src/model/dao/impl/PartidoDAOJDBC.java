@@ -13,6 +13,10 @@ public class PartidoDAOJDBC implements PartidoDAO {
 
     private Connection conn;
 
+    public PartidoDAOJDBC(Connection conn) {
+        this.conn = conn;
+    }
+
     @Override
     public void insert(Partido obj) {
         try {
@@ -56,17 +60,16 @@ public class PartidoDAOJDBC implements PartidoDAO {
     }
 
     @Override
-    public Partido findByName(String name) {
+    public Partido findById(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
-        Candidato candidato = null;
 
         try {
             st = conn.prepareStatement(
                     "SELECT * FROM partidos "
-                            +"WHERE partidos.Name = ?"
+                            +"WHERE partidos.Id = ?"
             );
-            st.setString(1, name);
+            st.setInt(1, id);
             rs = st.executeQuery();
             while (rs.next()){
                 return instantiatePartido(rs);
@@ -105,22 +108,11 @@ public class PartidoDAOJDBC implements PartidoDAO {
         }
     }
 
-    private Partido instantiateCandidato(ResultSet rs){
-        Partido partido = new Partido();
-        try {
-            partido.setId(rs.getInt("Id"));
-            partido.setNome(rs.getString("Name"));
-            return partido;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private Partido instantiatePartido(ResultSet rs){
         Partido partido = new Partido();
         try {
             partido.setId(rs.getInt("Id"));
-            partido.setNome(rs.getString("Nome"));
+            partido.setNome(rs.getString("Name"));
             return partido;
         } catch (SQLException e) {
             throw new RuntimeException(e);
