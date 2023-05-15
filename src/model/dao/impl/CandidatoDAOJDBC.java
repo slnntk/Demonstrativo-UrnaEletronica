@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class CandidatoDAOJDBC implements CandidatoDAO {
 
-    private Connection conn;
+    private final Connection conn;
 
     public CandidatoDAOJDBC(Connection conn) {
         this.conn = conn;
@@ -43,7 +43,6 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
     @Override
     public void deleteById(Integer id) {
         PreparedStatement st = null;
-        Candidato candidato = null;
 
         try {
             st = conn.prepareStatement(
@@ -65,7 +64,6 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
     public Candidato findByNumber(Integer numero) {
         PreparedStatement st = null;
         ResultSet rs = null;
-        Candidato candidato = null;
 
         try {
             st = conn.prepareStatement(
@@ -114,11 +112,12 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
     private Candidato instantiateCandidato(ResultSet rs, Integer partidoId){
         Candidato candidato = new Candidato();
         PartidoDAOJDBC jd = new PartidoDAOJDBC(conn);
-        Partido partido = jd.findById(partidoId);
+        Partido partido = null;
         try {
+            partido = jd.findById(rs.getInt("partidosId"));
             candidato.setId(rs.getInt("Id"));
             candidato.setNumero(rs.getInt("Numero"));
-            candidato.setNome(rs.getString("Nome"));
+            candidato.setNome(rs.getString("Name"));
             candidato.setVotos(rs.getInt("Votos"));
             candidato.setPartido(partido);
             return candidato;
