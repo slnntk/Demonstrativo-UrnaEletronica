@@ -111,8 +111,10 @@ public class CandidatoDAOJDBC implements CandidatoDAO {
         }
     }
 
-    private Candidato instantiateCandidato(ResultSet rs, Partido partido){
+    private Candidato instantiateCandidato(ResultSet rs, Integer partidoId){
         Candidato candidato = new Candidato();
+        PartidoDAOJDBC jd = new PartidoDAOJDBC();
+        Partido partido = jd.findById(partidoId);
         try {
             candidato.setId(rs.getInt("Id"));
             candidato.setNumero(rs.getInt("Numero"));
