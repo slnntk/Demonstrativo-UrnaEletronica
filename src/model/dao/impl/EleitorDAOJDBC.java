@@ -2,14 +2,13 @@ package model.dao.impl;
 
 import db.DB;
 import model.dao.EleitorDAO;
-import model.entities.Candidato;
 import model.entities.Eleitor;
 
 import java.sql.*;
 
 public class EleitorDAOJDBC implements EleitorDAO {
 
-    private Connection conn;
+    private final Connection conn;
 
     public EleitorDAOJDBC(Connection conn) {
         this.conn = conn;
@@ -18,7 +17,6 @@ public class EleitorDAOJDBC implements EleitorDAO {
     public Eleitor findByTitulo(Integer titulo) {
         PreparedStatement st = null;
         ResultSet rs = null;
-        Candidato candidato = null;
 
         try {
             st = conn.prepareStatement(
@@ -49,7 +47,7 @@ public class EleitorDAOJDBC implements EleitorDAO {
                     +"VALUES "
                     +"(?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1, obj.getTitulo().intValue());
+            st.setInt(1, obj.getTitulo());
             st.setBoolean(2, false);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -60,12 +58,12 @@ public class EleitorDAOJDBC implements EleitorDAO {
     @Override
     public boolean hasVoted(Eleitor obj) {
         try {
-            ResultSet rs = null;
+            ResultSet rs;
             PreparedStatement st = conn.prepareStatement(
                      "SELECT hasVoted FROM eleitores "
                     +"WHERE Titulo = ? "
             );
-            st.setInt(1, obj.getTitulo().intValue());
+            st.setInt(1, obj.getTitulo());
             st.executeQuery();
             rs = st.getResultSet();
             while (rs.next()){
@@ -76,6 +74,26 @@ public class EleitorDAOJDBC implements EleitorDAO {
         return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "DELETE FROM eleitores "
+                            +"WHERE "
+                            +"Id = ?"
+            );
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DB.closeStatement(st);
+            DB.getConnection();
         }
     }
 
